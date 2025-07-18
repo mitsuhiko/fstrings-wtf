@@ -231,6 +231,19 @@ print(f"{a:=10}")`,
     },
     {
         code: `a = 42
+print(f"{(a:=10)}")`,
+        question: "Does this change anything? What will this print?",
+        answers: [
+            "        42",
+            "a=42      ",
+            "fails with ValueError: Invalid format specifier",
+            "10",
+        ],
+        correct: 3,
+        explanation: "This is a bit of a trick question. The walrus operator here assigns 10 to a and the f-string then prints that result.",
+    },
+    {
+        code: `a = 42
 b = 23
 print(f"{(a, b := [1, 2])}")`,
         question: "Let's try with more than one target here. What will this print?",
@@ -242,6 +255,18 @@ print(f"{(a, b := [1, 2])}")`,
         ],
         correct: 3,
         explanation: "This doesn't really have anything to do with f-strings, but the walrus operator binds quite narrow so we build a tuple of a as it was assigned, and we override b with the list to the right. As a byproduct b was also rebound to [1, 2].",
+    },
+    {
+        code: `print(f"{f"{{}}"}")`,
+        question: "Can they be nested? What will it print?",
+        answers: [
+            "fails with SyntaxError: invalid syntax",
+            "{}",
+            "f{}",
+            "f\"{}\"",
+        ],
+        correct: 1,
+        explanation: "Yes! They can be nested.  The {{ and }} just escapes it like before.",
     },
 ];
 
