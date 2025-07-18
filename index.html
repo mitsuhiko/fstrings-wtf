@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wt(f'')? - Python f-strings Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>wt(f'')</h1>
+        </header>
+
+        <div class="quiz-container">
+            <div class="question-info">
+                <span class="question-counter">Question <span id="current-question">1</span> of <span id="total-questions">?</span></span>
+                <span class="score">Score: <span id="score">0</span>/<span id="total-questions-score">?</span></span>
+            </div>
+
+            <div class="question-section">
+                <div class="code-example">
+                    <pre><code id="code-display"></code></pre>
+                </div>
+                
+                <div class="question-text" id="question-text"></div>
+            </div>
+
+            <div class="explanation-section" id="explanation-section">
+                <div class="explanation-text" id="explanation-text"></div>
+            </div>
+
+            <div class="answers-section">
+                <button class="answer-btn" id="answer-0"></button>
+                <button class="answer-btn" id="answer-1"></button>
+                <button class="answer-btn" id="answer-2"></button>
+                <button class="answer-btn" id="answer-3"></button>
+            </div>
+
+            <div class="navigation">
+                <button id="next-btn" class="nav-btn">Next Question</button>
+                <button id="restart-btn" class="nav-btn" style="display: none;">Restart Quiz</button>
+            </div>
+        </div>
+
+        <div class="final-score" id="final-score" style="display: none;">
+            <h2>Quiz Complete!</h2>
+            <p>Your final score: <span id="final-score-value"></span>/<span id="total-questions-final">20</span></p>
+            <p id="score-message"></p>
+            <button id="restart-final-btn" class="nav-btn">Take Quiz Again</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
