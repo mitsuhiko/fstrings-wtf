@@ -214,7 +214,7 @@ const questions = [
             "11111",
         ],
         correct: 3,
-        explanation: "Well that's unexpected. The first 1 < 5 evaluates to True, but for some reason booleans render like integers when padded since they are a subclass of int.  So we're padding out to 5 characters, all of hwich are prefixed by 1.",
+        explanation: "Well that's unexpected. The first 1 < 5 evaluates to True, but for some reason booleans render like integers when padded since they are a subclass of int.  So we're padding out to 5 characters, all of which are prefixed by 1.",
     },
     {
         code: `a = 42
