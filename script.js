@@ -324,6 +324,7 @@ class Quiz {
         this.explanationSection = document.getElementById('explanation-section');
         this.explanationText = document.getElementById('explanation-text');
         this.nextButton = document.getElementById('next-btn');
+        this.finishButton = document.getElementById('finish-btn');
         this.restartButton = document.getElementById('restart-btn');
         this.finalScoreSection = document.getElementById('final-score');
         this.finalScoreValue = document.getElementById('final-score-value');
@@ -341,6 +342,7 @@ class Quiz {
         });
         
         this.nextButton.addEventListener('click', () => this.nextQuestion());
+        this.finishButton.addEventListener('click', () => this.nextQuestion());
         this.restartButton.addEventListener('click', () => this.restartQuiz());
         this.restartFinalButton.addEventListener('click', () => this.restartQuiz());
         
@@ -420,6 +422,7 @@ class Quiz {
             
             this.explanationSection.classList.remove('show');
             this.nextButton.style.display = 'none';
+            this.finishButton.style.display = 'none';
             this.isAnswered = false;
             
             // Fade back in
@@ -456,7 +459,14 @@ class Quiz {
         this.explanationText.textContent = question.explanation;
         this.explanationSection.classList.add('show');
         
-        this.nextButton.style.display = 'inline-block';
+        // Show appropriate button based on question number
+        if (this.currentQuestion === this.totalQuestions - 1) {
+            this.finishButton.style.display = 'inline-block';
+            this.nextButton.style.display = 'none';
+        } else {
+            this.nextButton.style.display = 'inline-block';
+            this.finishButton.style.display = 'none';
+        }
     }
     
     animateScoreFlip(oldScore, newScore) {
