@@ -61,13 +61,33 @@
         </div>
 
         <div class="final-score" id="final-score" style="display: none;">
-            <h2>Quiz Complete!</h2>
+            <h2>You Did It!</h2>
             <p>Your final score: <span id="final-score-value"></span>/<span id="total-questions-final">20</span></p>
             <p id="score-message"></p>
+            
+            <div class="social-sharing">
+                <p class="sharing-label">Share your score:</p>
+                <div class="social-buttons">
+                    <button id="share-twitter" class="social-btn twitter-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                        Share on X
+                    </button>
+                    <button id="share-bluesky" class="social-btn bluesky-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-2.67-.296-5.568.628-6.383 3.364C.378 17.702 0 22.661 0 23.35c0 .688.139 1.861.902 2.204.659.298 1.664.62 4.3-1.239C7.954 22.373 10.913 18.434 12 16.32c1.087 2.114 4.046 6.053 6.798 7.995 2.636 1.859 3.641 1.537 4.3 1.239.763-.343.902-1.516.902-2.204 0-.689-.378-5.648-.624-6.479-.815-2.736-3.713-3.66-6.383-3.364-.139.016-.277.034-.415.056.138-.017.276-.036.415-.056 2.67.296 5.568-.628 6.383-3.364.246-.829.624-5.789.624-6.479 0-.688-.139-1.86-.902-2.204-.659-.298-1.664-.62-4.3 1.239C16.046 4.747 13.087 8.686 12 10.8z"/>
+                        </svg>
+                        Share on Bluesky
+                    </button>
+                </div>
+            </div>
+            
             <button id="restart-final-btn" class="nav-btn">Take Quiz Again</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="questions.js"></script>
+    <script src="quiz.js"></script>
 </body>
 </html>

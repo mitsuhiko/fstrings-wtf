@@ -453,6 +453,65 @@ header p {
     font-size: 1.1em;
 }
 
+.social-sharing {
+    margin: 30px 0 20px 0;
+    padding: 20px 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.sharing-label {
+    color: #666;
+    font-size: 1em;
+    margin-bottom: 15px;
+    font-weight: normal;
+}
+
+.social-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: white;
+}
+
+.twitter-btn {
+    background: #1DA1F2;
+}
+
+.twitter-btn:hover {
+    background: #0d8bd9;
+    transform: translateY(-1px);
+}
+
+.bluesky-btn {
+    background: #0085ff;
+}
+
+.bluesky-btn:hover {
+    background: #0066cc;
+    transform: translateY(-1px);
+}
+
+.social-btn svg {
+    flex-shrink: 0;
+}
+
 /* Animations */
 @keyframes splashFadeInUp {
     from {
