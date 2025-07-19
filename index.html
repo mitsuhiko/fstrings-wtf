@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wt(f"") - Python f-strings Quiz</title>
+    <title>fstrings.wtf</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
     <!-- Splash Screen -->
     <div id="splash-screen" class="splash-screen">
         <div class="splash-content">
-            <h1 class="splash-title">f-strings</h1>
+            <h1 class="splash-title">fstrings.wtf</h1>
             <p class="splash-subtitle">How good is your knowledge of Python's strings?</p>
             <p class="splash-note">(Questions reflect behavior as of Python 3.13)</p>
             <button id="start-quiz-btn" class="start-quiz-btn">Start Quiz</button>
@@ -25,13 +25,13 @@
 
     <div class="container" id="main-content">
         <header>
-            <h1>wt(f"")</h1>
+            <h1>fstrings.wtf</h1>
         </header>
 
         <div class="quiz-container">
             <div class="question-info">
                 <span class="question-counter">Question <span id="current-question">1</span> of <span id="total-questions">?</span></span>
-                <span class="score">Score: <span id="score">0</span>/<span id="total-questions-score">?</span></span>
+                <span class="score">Score: <span class="score-flip-container"><span id="score" class="score-digit">0</span></span>/<span id="total-questions-score">?</span></span>
             </div>
 
             <div class="question-section">

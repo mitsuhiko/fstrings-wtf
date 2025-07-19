@@ -204,6 +204,42 @@ header p {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.score-flip-container {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    height: 1em;
+    width: 1.2em;
+    text-align: right;
+}
+
+.score-digit {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    line-height: 1.2em;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.score-digit.flip-out {
+    transform: translateY(-100%);
+}
+
+.score-digit.flip-in {
+    transform: translateY(100%);
+    animation: flipIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes flipIn {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
 .question-section {
     margin-bottom: 20px;
     animation: fadeInUp 0.6s ease-out;

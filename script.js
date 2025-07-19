@@ -450,13 +450,7 @@ class Quiz {
         
         if (allCorrect || selectedIndex === correctIndex) {
             this.score++;
-            this.scoreElement.style.transform = 'scale(1.2)';
-            this.scoreElement.style.color = '#5E936C';
-            setTimeout(() => {
-                this.scoreElement.textContent = this.score;
-                this.scoreElement.style.transform = 'scale(1)';
-                this.scoreElement.style.color = '#113F67';
-            }, 150);
+            this.animateScoreFlip(this.score - 1, this.score);
         }
         
         this.explanationText.textContent = question.explanation;
@@ -465,6 +459,38 @@ class Quiz {
         this.nextButton.style.display = 'inline-block';
     }
     
+    animateScoreFlip(oldScore, newScore) {
+        const container = document.querySelector('.score-flip-container');
+        const currentElement = this.scoreElement;
+        
+        // Create new element for the incoming number
+        const newElement = document.createElement('span');
+        newElement.className = 'score-digit flip-in';
+        newElement.textContent = newScore;
+        newElement.style.color = '#5E936C';
+        
+        // Add flip-out class to current element
+        currentElement.classList.add('flip-out');
+        currentElement.style.color = '#5E936C';
+        
+        // Add new element to container
+        container.appendChild(newElement);
+        
+        // After animation completes, clean up
+        setTimeout(() => {
+            // Remove old element
+            currentElement.remove();
+            
+            // Update the new element to be the current score element
+            newElement.className = 'score-digit';
+            newElement.style.color = '#113F67';
+            newElement.id = 'score';
+            
+            // Update the reference
+            this.scoreElement = newElement;
+        }, 600);
+    }
+
     nextQuestion() {
         this.currentQuestion++;
         
@@ -504,6 +530,8 @@ class Quiz {
         this.isAnswered = false;
         
         this.scoreElement.textContent = this.score;
+        this.scoreElement.className = 'score-digit';
+        this.scoreElement.style.color = '#113F67';
         this.finalScoreSection.style.display = 'none';
         document.querySelector('.quiz-container').style.display = 'block';
         
