@@ -154,6 +154,24 @@
     </div>
   </div>
 
+  <!-- Continue Dialog -->
+  <div id="continue-dialog" class="help-popover" style="display: none;">
+    <div class="help-popover-content">
+      <div class="help-popover-header">
+        <h3>Continue Quiz?</h3>
+      </div>
+      <div class="help-popover-body">
+        <p>You have a saved quiz in progress:</p>
+        <p><strong>Question:</strong> <span id="saved-question-num"></span> of <span id="total-questions-dialog">?</span></p>
+        <p><strong>Score:</strong> <span id="saved-score"></span></p>
+        <div class="continue-dialog-buttons">
+          <button id="continue-btn" class="nav-btn">Continue</button>
+          <button id="restart-new-btn" class="nav-btn">Restart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="questions.js"></script>
   <script src="quiz.js"></script>
 </body>

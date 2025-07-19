@@ -938,3 +938,11 @@ header p {
 .help-popover-body a:hover {
   color: #0e3556;
 }
+
+/* Continue Dialog Styles */
+.continue-dialog-buttons {
+  display: flex;
+  gap: 16px;
+  margin-top: 20px;
+  justify-content: center;
+}

@@ -81,6 +81,7 @@ class Quiz {
     this.totalQuestionsElement.textContent = this.totalQuestions;
     this.totalQuestionsScoreElement.textContent = this.totalQuestions;
     this.totalQuestionsFinalElement.textContent = this.totalQuestions;
+    document.getElementById("total-questions-dialog").textContent = this.totalQuestions;
 
     // Initialize progress bar
     this.updateProgressBar();
@@ -124,6 +125,7 @@ class Quiz {
         this.hideHelpPopover();
       }
     });
+
 
     // Add keyboard event listener for number keys 1-4 and navigation
     document.addEventListener("keydown", (event) => {
@@ -329,6 +331,9 @@ class Quiz {
       this.animateScoreFlip(this.score - 1, this.score);
     }
 
+    // Save state after answering
+    this.saveState();
+
     this.explanationText.textContent = question.explanation;
     this.explanationSection.classList.add("show");
 
@@ -380,11 +385,16 @@ class Quiz {
     if (this.currentQuestion >= this.totalQuestions) {
       this.showFinalScore();
     } else {
+      // Save state when moving to next question
+      this.saveState();
       this.loadQuestion();
     }
   }
 
   showFinalScore() {
+    // Clear saved state when quiz is completed
+    this.clearState();
+    
     document.querySelector(".quiz-container").style.display = "none";
     this.finalScoreSection.style.display = "block";
     this.finalScoreValue.textContent = this.score;
@@ -431,6 +441,9 @@ class Quiz {
   }
 
   restartQuiz() {
+    // Clear saved state when restarting
+    this.clearState();
+    
     this.currentQuestion = 0;
     this.score = 0;
     this.isAnswered = false;
@@ -460,9 +473,177 @@ class Quiz {
       this.helpPopover.style.display = "none";
     }, 300); // Wait for animation to complete
   }
+
+  // Local storage methods for saving/loading quiz state
+  saveState() {
+    const state = {
+      currentQuestion: this.currentQuestion,
+      score: this.score
+    };
+    localStorage.setItem('fstrings-quiz-state', JSON.stringify(state));
+  }
+
+  loadState() {
+    try {
+      const savedState = localStorage.getItem('fstrings-quiz-state');
+      if (savedState) {
+        return JSON.parse(savedState);
+      }
+    } catch (e) {
+      console.warn('Failed to load saved quiz state:', e);
+    }
+    return null;
+  }
+
+  clearState() {
+    localStorage.removeItem('fstrings-quiz-state');
+  }
+
 }
 
-// Initialize the quiz when the page loads
+// Check for saved state and show continue dialog before initializing quiz
 document.addEventListener("DOMContentLoaded", () => {
+  // Check for saved state first
+  const savedState = loadSavedState();
+  
+  if (savedState && !shouldSkipSplashForURL()) {
+    const { currentQuestion, score } = savedState;
+    
+    // Only show continue dialog if not on first or last question
+    if (currentQuestion > 0 && currentQuestion < QUESTIONS.length - 1) {
+      showContinueDialog(savedState);
+      return; // Don't initialize quiz yet
+    } else {
+      // Clear state if on first or last question
+      clearSavedState();
+    }
+  }
+  
+  // Initialize quiz normally
   new Quiz();
 });
+
+// Utility functions for pre-quiz state checking
+function loadSavedState() {
+  try {
+    const savedState = localStorage.getItem('fstrings-quiz-state');
+    if (savedState) {
+      return JSON.parse(savedState);
+    }
+  } catch (e) {
+    console.warn('Failed to load saved quiz state:', e);
+  }
+  return null;
+}
+
+function clearSavedState() {
+  localStorage.removeItem('fstrings-quiz-state');
+}
+
+function shouldSkipSplashForURL() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.has("q");
+}
+
+function showContinueDialog(savedState) {
+  const { currentQuestion, score } = savedState;
+  
+  // Hide splash screen
+  const splashScreen = document.getElementById("splash-screen");
+  splashScreen.style.display = 'none';
+  
+  // Keep main content hidden - we only want the dialog visible
+  const mainContent = document.getElementById("main-content");
+  // Don't add 'show' class to main content yet
+  
+  // Update dialog with saved state info
+  const savedQuestionElement = document.getElementById('saved-question-num');
+  const savedScoreElement = document.getElementById('saved-score');
+  const totalQuestionsElement = document.getElementById("total-questions-dialog");
+  
+  if (savedQuestionElement) savedQuestionElement.textContent = currentQuestion + 1;
+  if (savedScoreElement) savedScoreElement.textContent = score;
+  if (totalQuestionsElement) totalQuestionsElement.textContent = QUESTIONS.length;
+  
+  // Show continue dialog
+  const continueDialog = document.getElementById('continue-dialog');
+  if (continueDialog) {
+    continueDialog.style.display = 'flex';
+    
+    // Use requestAnimationFrame to ensure proper rendering
+    requestAnimationFrame(() => {
+      continueDialog.classList.add('show');
+    });
+  }
+  
+  // Add event listeners for continue dialog
+  const continueBtn = document.getElementById("continue-btn");
+  const restartBtn = document.getElementById("restart-new-btn");
+  
+  if (continueBtn) {
+    continueBtn.addEventListener("click", () => {
+      continueFromSaved(savedState);
+    });
+  }
+  
+  if (restartBtn) {
+    restartBtn.addEventListener("click", () => {
+      restartFromBeginning();
+    });
+  }
+}
+
+function continueFromSaved(savedState) {
+  // Hide continue dialog
+  const continueDialog = document.getElementById('continue-dialog');
+  if (continueDialog) {
+    continueDialog.classList.remove('show');
+    setTimeout(() => {
+      continueDialog.style.display = 'none';
+    }, 300);
+  }
+  
+  // Initialize quiz with saved state
+  setTimeout(() => {
+    const quiz = new Quiz();
+    
+    // Override the constructor's default values with saved state
+    quiz.currentQuestion = savedState.currentQuestion;
+    quiz.score = savedState.score;
+    
+    // Make sure the quiz is in the main content, not splash
+    quiz.splashScreen.style.display = 'none';
+    quiz.mainContent.classList.add('show'); // Now we show the main content
+    
+    // Update score display
+    quiz.scoreElement.textContent = quiz.score;
+    
+    // Load the saved question
+    quiz.loadQuestion();
+  }, 400);
+}
+
+function restartFromBeginning() {
+  clearSavedState();
+  
+  // Hide continue dialog
+  const continueDialog = document.getElementById('continue-dialog');
+  if (continueDialog) {
+    continueDialog.classList.remove('show');
+    setTimeout(() => {
+      continueDialog.style.display = 'none';
+    }, 300);
+  }
+  
+  // Show splash screen again
+  const splashScreen = document.getElementById("splash-screen");
+  const mainContent = document.getElementById("main-content");
+  
+  if (mainContent) mainContent.classList.remove('show');
+  if (splashScreen) splashScreen.style.display = 'flex';
+  
+  // Initialize quiz normally
+  setTimeout(() => {
+    new Quiz();
+  }, 400);
+}
