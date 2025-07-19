@@ -3,6 +3,7 @@ class Quiz {
     this.currentQuestion = 0;
     this.score = 0;
     this.isAnswered = false;
+    this.selectedAnswerIndex = 0;
     this.totalQuestions = QUESTIONS.length;
     this.splashScreen = document.getElementById("splash-screen");
     this.mainContent = document.getElementById("main-content");
@@ -74,6 +75,12 @@ class Quiz {
   setupEventListeners() {
     this.answerButtons.forEach((button, index) => {
       button.addEventListener("click", () => this.selectAnswer(index));
+      button.addEventListener("mouseenter", () => {
+        if (!this.isAnswered) {
+          this.selectedAnswerIndex = index;
+          this.updateSelectedAnswer();
+        }
+      });
     });
 
     this.nextButton.addEventListener("click", () => this.nextQuestion());
@@ -91,16 +98,38 @@ class Quiz {
     document.addEventListener("keydown", (event) => {
       const key = event.key;
 
+      // Skip if splash screen is visible
+      if (!this.splashScreen.classList.contains("hidden")) {
+        return;
+      }
+
+      // Arrow keys and j/k for navigation (only when not answered)
+      if (!this.isAnswered) {
+        if (key === "ArrowUp" || key === "k") {
+          event.preventDefault();
+          this.selectedAnswerIndex = Math.max(0, this.selectedAnswerIndex - 1);
+          this.updateSelectedAnswer();
+        } else if (key === "ArrowDown" || key === "j") {
+          event.preventDefault();
+          this.selectedAnswerIndex = Math.min(3, this.selectedAnswerIndex + 1);
+          this.updateSelectedAnswer();
+        }
+      }
+
       // Number keys 1-4 for answer selection (only when not answered)
       if (!this.isAnswered && key >= "1" && key <= "4") {
         const answerIndex = parseInt(key) - 1;
         this.selectAnswer(answerIndex);
       }
 
-      // Enter or Space for next question (only when answered)
-      if ((key === "Enter" || key === " ") && this.isAnswered) {
+      // Enter or Space for answer selection (when not answered) or next question (when answered)
+      if (key === "Enter" || key === " ") {
         event.preventDefault(); // Prevent default space/enter behavior
-        this.nextQuestion();
+        if (!this.isAnswered) {
+          this.selectAnswer(this.selectedAnswerIndex);
+        } else {
+          this.nextQuestion();
+        }
       }
     });
   }
@@ -171,6 +200,8 @@ class Quiz {
       this.nextButton.style.display = "none";
       this.finishButton.style.display = "none";
       this.isAnswered = false;
+      this.selectedAnswerIndex = 0;
+      this.updateSelectedAnswer();
 
       // Fade back in
       questionSection.style.opacity = "1";
@@ -183,6 +214,18 @@ class Quiz {
     this.progressBar.style.width = `${progress}%`;
   }
 
+  updateSelectedAnswer() {
+    if (this.isAnswered) return;
+    
+    this.answerButtons.forEach((button, index) => {
+      if (index === this.selectedAnswerIndex) {
+        button.classList.add("selected");
+      } else {
+        button.classList.remove("selected");
+      }
+    });
+  }
+
   selectAnswer(selectedIndex) {
     if (this.isAnswered) return;
 
@@ -193,6 +236,7 @@ class Quiz {
     this.isAnswered = true;
 
     this.answerButtons.forEach((button, index) => {
+      button.classList.remove("selected"); // Remove selection highlighting
       button.classList.add("disabled");
       if (allCorrect) {
         button.classList.add("correct");
