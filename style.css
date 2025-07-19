@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Space Mono', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-    background-color: #113F67;
+    background: linear-gradient(135deg, #113F67 0%, #0e3556 100%);
     color: #030303;
     line-height: 1.6;
     min-height: 100vh;
@@ -32,6 +32,7 @@ header h1 {
     font-size: 3em;
     margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    animation: fadeInUp 0.8s ease-out;
 }
 
 header p {
@@ -41,9 +42,11 @@ header p {
 
 .quiz-container {
     background: white;
-    border-radius: 10px;
+    border-radius: 15px;
     padding: 30px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    animation: fadeInUp 0.6s ease-out;
+    transform: translateY(0);
 }
 
 .question-info {
@@ -52,19 +55,27 @@ header p {
     margin-bottom: 20px;
     font-weight: bold;
     color: #113F67;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.score span {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .question-section {
     margin-bottom: 20px;
+    animation: fadeInUp 0.6s ease-out;
+    transition: opacity 0.3s ease-out;
 }
 
 .code-example {
-    background: #113F67;
+    background: linear-gradient(135deg, #113F67 0%, #0e3556 100%);
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     padding: 15px;
     margin-bottom: 20px;
     overflow-x: auto;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .code-example pre {
@@ -82,6 +93,7 @@ header p {
 
 .answers-section {
     margin-bottom: 30px;
+    transition: opacity 0.3s ease-out;
 }
 
 .answer-btn {
@@ -90,15 +102,23 @@ header p {
     padding: 15px;
     margin-bottom: 10px;
     border: 2px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
     background: white;
     color: #030303;
     font-size: 1em;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-align: left;
     white-space: pre;
+    animation: slideInLeft 0.4s ease-out;
+    animation-fill-mode: both;
+    transform: translateX(0);
 }
+
+.answer-btn:nth-child(1) { animation-delay: 0.1s; }
+.answer-btn:nth-child(2) { animation-delay: 0.2s; }
+.answer-btn:nth-child(3) { animation-delay: 0.3s; }
+.answer-btn:nth-child(4) { animation-delay: 0.4s; }
 
 .shortcut-key {
     display: inline-block;
@@ -116,6 +136,8 @@ header p {
 .answer-btn:hover {
     background: #f8f9fa;
     border-color: #113F67;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(17, 63, 103, 0.15);
 }
 
 .answer-btn.correct {
@@ -137,14 +159,22 @@ header p {
 
 .explanation-section {
     background: #f8f9fa;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 20px;
-    display: none;
+    border-radius: 8px;
+    padding: 0 15px;
+    margin-bottom: 0;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1), max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .explanation-section.show {
-    display: block;
+    padding: 15px;
+    margin-bottom: 20px;
+    max-height: 200px;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .explanation-text {
@@ -162,14 +192,17 @@ header p {
     border: none;
     padding: 12px 24px;
     font-size: 1.1em;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     margin: 0 10px;
+    transform: translateY(0);
 }
 
 .nav-btn:hover {
     background: #0e3556;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(17, 63, 103, 0.3);
 }
 
 .nav-btn:disabled {
@@ -179,10 +212,11 @@ header p {
 
 .final-score {
     background: white;
-    border-radius: 10px;
+    border-radius: 15px;
     padding: 40px;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    animation: fadeInScale 0.8s ease-out;
 }
 
 .final-score h2 {
@@ -206,6 +240,91 @@ header p {
     color: #113F67;
     font-weight: bold;
     font-size: 1.1em;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes correctPulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(94, 147, 108, 0.7);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 0 0 10px rgba(94, 147, 108, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(94, 147, 108, 0);
+    }
+}
+
+@keyframes wrongPulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(220, 60, 34, 0.7);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 0 0 10px rgba(220, 60, 34, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(220, 60, 34, 0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
 }
 
 /* Responsive design */

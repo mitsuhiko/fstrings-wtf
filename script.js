@@ -356,18 +356,35 @@ class Quiz {
     loadQuestion() {
         const question = questions[this.currentQuestion];
         
-        this.questionCounter.textContent = this.currentQuestion + 1;
-        this.codeDisplay.textContent = question.code;
-        this.questionText.textContent = question.question;
+        // Add fade-out class first
+        const questionSection = document.querySelector('.question-section');
+        const answersSection = document.querySelector('.answers-section');
         
-        this.answerButtons.forEach((button, index) => {
-            button.innerHTML = `<span class="shortcut-key">${index + 1}</span> ${question.answers[index]}`;
-            button.className = 'answer-btn';
-        });
+        questionSection.style.opacity = '0';
+        answersSection.style.opacity = '0';
         
-        this.explanationSection.classList.remove('show');
-        this.nextButton.style.display = 'none';
-        this.isAnswered = false;
+        setTimeout(() => {
+            this.questionCounter.textContent = this.currentQuestion + 1;
+            this.codeDisplay.textContent = question.code;
+            this.questionText.textContent = question.question;
+            
+            this.answerButtons.forEach((button, index) => {
+                button.innerHTML = `<span class="shortcut-key">${index + 1}</span> ${question.answers[index]}`;
+                button.className = 'answer-btn';
+                // Reset animation
+                button.style.animation = 'none';
+                button.offsetHeight; // Trigger reflow
+                button.style.animation = null;
+            });
+            
+            this.explanationSection.classList.remove('show');
+            this.nextButton.style.display = 'none';
+            this.isAnswered = false;
+            
+            // Fade back in
+            questionSection.style.opacity = '1';
+            answersSection.style.opacity = '1';
+        }, 200);
     }
     
     selectAnswer(selectedIndex) {
@@ -392,11 +409,18 @@ class Quiz {
         
         if (allCorrect || selectedIndex === correctIndex) {
             this.score++;
-            this.scoreElement.textContent = this.score;
+            this.scoreElement.style.transform = 'scale(1.2)';
+            this.scoreElement.style.color = '#5E936C';
+            setTimeout(() => {
+                this.scoreElement.textContent = this.score;
+                this.scoreElement.style.transform = 'scale(1)';
+                this.scoreElement.style.color = '#113F67';
+            }, 150);
         }
         
         this.explanationText.textContent = question.explanation;
         this.explanationSection.classList.add('show');
+        
         this.nextButton.style.display = 'inline-block';
     }
     
