@@ -5,6 +5,8 @@ class Quiz {
     this.isAnswered = false;
     this.selectedAnswerIndex = 0;
     this.totalQuestions = QUESTIONS.length;
+    this.isTouchDevice = this.detectTouchDevice();
+    this.hasUsedKeyboard = false;
     this.splashScreen = document.getElementById("splash-screen");
     this.mainContent = document.getElementById("main-content");
     this.startQuizBtn = document.getElementById("start-quiz-btn");
@@ -19,6 +21,15 @@ class Quiz {
       this.hideSplashScreen();
       this.loadQuestion();
     }
+  }
+
+  detectTouchDevice() {
+    // Check for touch capability using multiple methods for better detection
+    return (
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      navigator.msMaxTouchPoints > 0
+    );
   }
 
   initializeFromURL() {
@@ -99,7 +110,9 @@ class Quiz {
 
     // Help popover event listeners
     this.helpIcon.addEventListener("click", () => this.showHelpPopover());
-    this.helpCloseButton.addEventListener("click", () => this.hideHelpPopover());
+    this.helpCloseButton.addEventListener("click", () =>
+      this.hideHelpPopover()
+    );
     this.helpPopover.addEventListener("click", (event) => {
       if (event.target === this.helpPopover) {
         this.hideHelpPopover();
@@ -125,11 +138,29 @@ class Quiz {
       if (!this.isAnswered) {
         if (key === "ArrowUp" || key === "k") {
           event.preventDefault();
-          this.selectedAnswerIndex = Math.max(0, this.selectedAnswerIndex - 1);
+          // If first time using keyboard on touch device, start from first item
+          if (this.isTouchDevice && !this.hasUsedKeyboard) {
+            this.hasUsedKeyboard = true;
+            this.selectedAnswerIndex = 0;
+          } else {
+            this.selectedAnswerIndex = Math.max(
+              0,
+              this.selectedAnswerIndex - 1
+            );
+          }
           this.updateSelectedAnswer();
         } else if (key === "ArrowDown" || key === "j") {
           event.preventDefault();
-          this.selectedAnswerIndex = Math.min(3, this.selectedAnswerIndex + 1);
+          // If first time using keyboard on touch device, start from first item
+          if (this.isTouchDevice && !this.hasUsedKeyboard) {
+            this.hasUsedKeyboard = true;
+            this.selectedAnswerIndex = 0;
+          } else {
+            this.selectedAnswerIndex = Math.min(
+              3,
+              this.selectedAnswerIndex + 1
+            );
+          }
           this.updateSelectedAnswer();
         }
       }
@@ -144,7 +175,14 @@ class Quiz {
       if (key === "Enter" || key === " ") {
         event.preventDefault(); // Prevent default space/enter behavior
         if (!this.isAnswered) {
-          this.selectAnswer(this.selectedAnswerIndex);
+          // On touch devices, if no answer is selected, select first one
+          if (this.isTouchDevice && this.selectedAnswerIndex === -1) {
+            this.hasUsedKeyboard = true;
+            this.selectedAnswerIndex = 0;
+            this.updateSelectedAnswer();
+          } else if (this.selectedAnswerIndex >= 0) {
+            this.selectAnswer(this.selectedAnswerIndex);
+          }
         } else {
           this.nextQuestion();
         }
@@ -218,8 +256,21 @@ class Quiz {
       this.nextButton.style.display = "none";
       this.finishButton.style.display = "none";
       this.isAnswered = false;
-      this.selectedAnswerIndex = 0;
-      this.updateSelectedAnswer();
+
+      // Reset keyboard usage flag for new question
+      this.hasUsedKeyboard = false;
+
+      // Only set default selection on non-touch devices
+      if (!this.isTouchDevice) {
+        this.selectedAnswerIndex = 0;
+        this.updateSelectedAnswer();
+      } else {
+        // On touch devices, remove any existing selection
+        this.selectedAnswerIndex = -1;
+        this.answerButtons.forEach((button) => {
+          button.classList.remove("selected");
+        });
+      }
 
       // Fade back in
       questionSection.style.opacity = "1";
@@ -234,9 +285,9 @@ class Quiz {
 
   updateSelectedAnswer() {
     if (this.isAnswered) return;
-    
+
     this.answerButtons.forEach((button, index) => {
-      if (index === this.selectedAnswerIndex) {
+      if (index === this.selectedAnswerIndex && this.selectedAnswerIndex >= 0) {
         button.classList.add("selected");
       } else {
         button.classList.remove("selected");
