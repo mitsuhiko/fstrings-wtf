@@ -424,7 +424,7 @@ class Quiz {
   shareOnTwitter() {
     const text = this.getShareText();
     const url = "https://fstrings.wtf";
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+    const twitterUrl = `https://x.com/intent/post?text=${encodeURIComponent(
       text
     )}&url=${encodeURIComponent(url)}`;
     window.open(twitterUrl, "_blank");
