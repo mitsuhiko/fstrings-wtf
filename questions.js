@@ -220,6 +220,18 @@ const QUESTIONS = [
         explanation: "Well that's unexpected. The first 1 < 5 evaluates to True, but for some reason booleans render like integers when padded since they are a subclass of int.  So we're padding out to 5 characters, all of which are prefixed by 1.",
     },
     {
+        code: `print(f"{0^5:0^5}")`,
+        question: "Similar, but different. What will this print?",
+        answers: [
+            "5",
+            "50000",
+            FAILS_WITH_VALUE_ERROR,
+            "00500",
+        ],
+        correct: 3,
+        explanation: "This isn't so hard, no? The first 0 ^ 5 evaluates to 5, and the second one centers the value in a width of 5 and pads it with zeroes. The rest we have seen already before.",
+    },
+    {
         code: `a = 42
 print(f"{a:=10}")`,
         question: "Let's introduce some variables. What will this print?",
@@ -257,6 +269,45 @@ print(f"{(a, b := [1, 1])}")`,
         ],
         correct: 3,
         explanation: "This doesn't really have anything to do with f-strings, but the walrus operator binds quite narrow so we build a tuple of a as it was assigned, and we override b with the list to the right. As a byproduct b was also rebound to [1, 1].",
+    },
+    {
+        code: `r = "🍌"
+print(f"{r=!r}")`,
+        question: "What the hell is =!?",
+        answers: [
+            FAILS_WITH_SYNTAX_ERROR,
+            "'🍌'",
+            "r=🍌",
+            "r='🍌'",
+        ],
+        correct: 3,
+        explanation: "Bang r lets us opt into the repr() output, and of course it can be combined.",
+    },
+    {
+        code: `a = "🍌"
+print(f"{a=!a}")`,
+        question: "We have seen r, but what is a?",
+        answers: [
+            "a=['🍌']",
+            FAILS_WITH_VALUE_ERROR,
+            "a='\\U0001f34c'",
+            "a='🍌'",
+        ],
+        correct: 2,
+        explanation: "a is like r, but it uses the unicode codepoint for the banana emoji."
+    },
+    {
+        code: `i = 10.0
+print(f"{i=!i}")`,
+        question: "And i?",
+        answers: [
+            "i=10.0",
+            FAILS_WITH_VALUE_ERROR,
+            "i=10",
+            "i=10j",
+        ],
+        correct: 1,
+        explanation: "There is no such thing such as d."
     },
     {
         code: `print(f"{f"{{}}"}")`,
