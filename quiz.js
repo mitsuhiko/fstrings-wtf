@@ -38,6 +38,7 @@ class Quiz {
         this.totalQuestionsScoreElement = document.getElementById('total-questions-score');
         this.totalQuestionsFinalElement = document.getElementById('total-questions-final');
         this.scoreElement = document.getElementById('score');
+        this.progressBar = document.getElementById('progress-bar');
         this.codeDisplay = document.getElementById('code-display');
         this.questionText = document.getElementById('question-text');
         this.answerButtons = [
@@ -61,6 +62,9 @@ class Quiz {
         this.totalQuestionsElement.textContent = this.totalQuestions;
         this.totalQuestionsScoreElement.textContent = this.totalQuestions;
         this.totalQuestionsFinalElement.textContent = this.totalQuestions;
+        
+        // Initialize progress bar
+        this.updateProgressBar();
     }
     
     setupEventListeners() {
@@ -137,6 +141,7 @@ class Quiz {
         
         setTimeout(() => {
             this.questionCounter.textContent = this.currentQuestion + 1;
+            this.updateProgressBar();
             this.codeDisplay.textContent = question.code;
             this.questionText.textContent = question.question;
             
@@ -158,6 +163,11 @@ class Quiz {
             questionSection.style.opacity = '1';
             answersSection.style.opacity = '1';
         }, 200);
+    }
+    
+    updateProgressBar() {
+        const progress = ((this.currentQuestion + 1) / this.totalQuestions) * 100;
+        this.progressBar.style.width = `${progress}%`;
     }
     
     selectAnswer(selectedIndex) {

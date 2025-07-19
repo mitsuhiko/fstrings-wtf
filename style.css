@@ -192,12 +192,58 @@ header p {
 }
 
 .question-info {
-    display: flex;
-    justify-content: space-between;
+    position: relative;
     margin-bottom: 20px;
     font-weight: bold;
     color: #113F67;
     animation: fadeInUp 0.5s ease-out;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+}
+
+.progress-bar-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #f8f9fa;
+    z-index: 1;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(135deg, #5E936C 0%, #7BA888 50%, #5E936C 100%);
+    background-size: 200% 100%;
+    animation: shimmerProgress 3s ease-in-out infinite;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: progressShine 2s ease-in-out infinite;
+}
+
+.question-info-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .score span {
@@ -608,6 +654,30 @@ header p {
     }
 }
 
+@keyframes shimmerProgress {
+    0% {
+        background-position: -200% 0;
+    }
+    50% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+@keyframes progressShine {
+    0% {
+        left: -100%;
+    }
+    50% {
+        left: 100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
 /* Responsive design */
 @media (max-width: 600px) {
     .container {
@@ -622,10 +692,11 @@ header p {
         padding: 20px;
     }
     
-    .question-info {
+    .question-info-content {
         flex-direction: column;
         gap: 10px;
         text-align: center;
+        padding: 12px 15px;
     }
     
     .splash-title {
