@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-family: 'Space Mono', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     background-color: #113F67;
     color: #030303;
     line-height: 1.6;
@@ -13,7 +13,7 @@ body {
 }
 
 pre, code, button {
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-family: 'Space Mono', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
 }
 
 .container {
@@ -69,7 +69,7 @@ header p {
 
 .code-example pre {
     margin: 0;
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-family: 'Space Mono', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     font-size: 1.0em;
     line-height: 1.4;
     color: white;

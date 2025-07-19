@@ -1,3 +1,6 @@
+const FAILS_WITH_SYNTAX_ERROR = "fails with SyntaxError";
+const FAILS_WITH_VALUE_ERROR = "fails with ValueError";
+
 // Quiz questions array - easily editable
 const questions = [
     {
@@ -19,7 +22,7 @@ const questions = [
             "Hello World!",
             "...",
             "Ellipsis",
-            "fails with SyntaxError",
+            FAILS_WITH_SYNTAX_ERROR,
         ],
         correct: 1,
         explanation: "No funny business here, just a literal string with three dots."
@@ -28,7 +31,7 @@ const questions = [
         code: `print(f"{...}")`,
         question: "Let's do some interpolation. What will this print?",
         answers: [
-            "fails with SyntaxError",
+            FAILS_WITH_SYNTAX_ERROR,
             "...",
             "Ellipsis",
             "prints nothing",
@@ -40,7 +43,7 @@ const questions = [
         code: `print(f"{...=}")`,
         question: "This on the other hand, what does this result in?",
         answers: [
-            "fails with SyntaxError",
+            FAILS_WITH_SYNTAX_ERROR,
             "...",
             "Ellipsis",
             "...=Ellipsis",
@@ -52,7 +55,7 @@ const questions = [
         code: `print(f"{... = }")`,
         question: "Does whitespace matter? What will this print?",
         answers: [
-            "fails with SyntaxError",
+            FAILS_WITH_SYNTAX_ERROR,
             "...=Ellipsis",
             "... =Ellipsis",
             "... = Ellipsis",
@@ -91,7 +94,7 @@ const questions = [
             "{1, 2, 3}",
             "{1,2,3}",
             "(1, 2, 3)",
-            "it fails with SyntaxError"
+            FAILS_WITH_SYNTAX_ERROR,
         ],
         correct: 2,
         explanation: "Because the grammar allows an expression here, an implicit tuple expression is assumed and we actually printed the debug repr of a tuple of three items instead."
@@ -103,7 +106,7 @@ const questions = [
             "{1, 2, 3}",
             "{1,2,3}",
             "(1, 2, 3)",
-            "it fails with SyntaxError"
+            FAILS_WITH_SYNTAX_ERROR,
         ],
         correct: 0,
         explanation: "Effective use of whitespace ensures that we can actually use a set literal for once <3"
@@ -113,7 +116,7 @@ const questions = [
         question: "Let's try some format modifiers. What will this print?",
         answers: [
             "255",
-            "Fails with unknown format code 'x'",
+            FAILS_WITH_VALUE_ERROR,
             "ff",
             "ÿ"
         ],
@@ -125,7 +128,7 @@ const questions = [
         question: "Let's look at another one.",
         answers: [
             "255",
-            "Fails with unknown format code 'c'",
+            FAILS_WITH_VALUE_ERROR,
             "ff",
             "ÿ"
         ],
@@ -150,8 +153,8 @@ const questions = [
         answers: [
             "ff",
             "0xff",
-            "fails with SyntaxError: '{' was never closed",
-            "fails with ValueError: Invalid format specifier",
+            FAILS_WITH_SYNTAX_ERROR,
+            FAILS_WITH_VALUE_ERROR,
         ],
         correct: 2,
         explanation: "This is in fact a syntax error because the '#' is the beginning of a comment and so 'x}' are part of the comment and our string was never closed!",
@@ -163,7 +166,7 @@ const questions = [
             "42      !",
             "      42!",
             "42!",
-            "fails with ValueError: Invalid format specifier",
+            FAILS_WITH_VALUE_ERROR,
         ],
         correct: 0,
         explanation: "The '<' modifier left-aligns the number in a field of 8 characters, so it will print '42' followed by 6 spaces and then '!'.",
@@ -175,7 +178,7 @@ const questions = [
             "42      !",
             "      42!",
             "42!",
-            "fails with ValueError: Invalid format specifier",
+            FAILS_WITH_VALUE_ERROR,
         ],
         correct: 1,
         explanation: "Well that shouldn't be a surprise, we align the other way round.",
@@ -186,8 +189,8 @@ const questions = [
         answers: [
             "1         !",
             "True!",
-            "fails with ValueError: Invalid format specifier",
-            "fails with TypeError: unsupported format string",
+            FAILS_WITH_VALUE_ERROR,
+            FAILS_WITH_SYNTAX_ERROR,
         ],
         correct: 1,
         explanation: "No colon means we're just rendering an expression and because 1 is smaller than 10, it evaluates to True. The f-string does not interpret the '<' as a format specifier.",
@@ -210,7 +213,7 @@ const questions = [
         answers: [
             "True1",
             "1True",
-            "fails with ValueError: Invalid format specifier",
+            FAILS_WITH_VALUE_ERROR,
             "11111",
         ],
         correct: 3,
@@ -223,7 +226,7 @@ print(f"{a:=10}")`,
         answers: [
             "        42",
             "a=42      ",
-            "fails with ValueError: Invalid format specifier",
+            FAILS_WITH_VALUE_ERROR,
             "10",
         ],
         correct: 0,
@@ -236,7 +239,7 @@ print(f"{(a:=10)}")`,
         answers: [
             "        42",
             "a=42      ",
-            "fails with ValueError: Invalid format specifier",
+            FAILS_WITH_VALUE_ERROR,
             "10",
         ],
         correct: 3,
@@ -248,7 +251,7 @@ b = 23
 print(f"{(a, b := [1, 2])}")`,
         question: "Let's try with more than one target here. What will this print?",
         answers: [
-            "fails with SyntaxError: invalid syntax",
+            FAILS_WITH_VALUE_ERROR,
             "(1, 2)",
             "[1, 2]",
             "(42, [1, 2])",
@@ -260,7 +263,7 @@ print(f"{(a, b := [1, 2])}")`,
         code: `print(f"{f"{{}}"}")`,
         question: "Can they be nested? What will it print?",
         answers: [
-            "fails with SyntaxError: invalid syntax",
+            FAILS_WITH_SYNTAX_ERROR,
             "{}",
             "f{}",
             "f\"{}\"",
