@@ -800,6 +800,31 @@ header p {
     margin: 15px;
     max-width: calc(100vw - 30px);
   }
+
+  /* Move navigation above answers and make buttons smaller */
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .explanation-section {
+    order: 1;
+  }
+
+  .navigation {
+    order: 2;
+    margin-bottom: 20px;
+  }
+
+  .answers-section {
+    order: 3;
+  }
+
+  .nav-btn {
+    padding: 8px 16px;
+    font-size: 0.9em;
+    margin: 0 5px;
+  }
 }
 
 /* Help Popover Styles */
