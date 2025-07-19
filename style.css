@@ -468,7 +468,7 @@ header p {
 .explanation-section.show {
   padding: 15px;
   margin-bottom: 20px;
-  max-height: 200px;
+  max-height: none;
   opacity: 1;
   transform: translateY(0);
 }
@@ -744,8 +744,18 @@ header p {
     padding: 10px;
   }
 
+  header {
+    margin-bottom: 10px;
+  }
+
   header h1 {
-    font-size: 2em;
+    font-size: 1.7em;
+    margin-bottom: 0;
+  }
+
+  .help-icon {
+    top: 12px;
+    right: 12px;
   }
 
   .quiz-container {
