@@ -208,7 +208,7 @@ print(f"{a=!a}")`,
     answers: ["a=['🍌']", FAILS_WITH_VALUE_ERROR, "a='\\U0001f34c'", "a='🍌'"],
     correct: 2,
     explanation:
-      "a is like r, but it uses the unicode codepoint for the banana emoji.",
+      "a is similar to r but uses the ascii() function which uses the unicode codepoints for non ascii characters (in our case for the banana emoji).",
   },
   {
     code: `i = 10.0
