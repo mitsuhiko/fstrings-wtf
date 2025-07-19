@@ -246,18 +246,17 @@ print(f"{(a:=10)}")`,
         explanation: "This is a bit of a trick question. The walrus operator here assigns 10 to a and the f-string then prints that result.",
     },
     {
-        code: `a = 42
-b = 23
-print(f"{(a, b := [1, 2])}")`,
+        code: `a = b = 1
+print(f"{(a, b := [1, 1])}")`,
         question: "Let's try with more than one target here. What will this print?",
         answers: [
             FAILS_WITH_VALUE_ERROR,
-            "(1, 2)",
-            "[1, 2]",
-            "(42, [1, 2])",
+            "(1, 1)",
+            "[1, 1]",
+            "(1, [1, 1])",
         ],
         correct: 3,
-        explanation: "This doesn't really have anything to do with f-strings, but the walrus operator binds quite narrow so we build a tuple of a as it was assigned, and we override b with the list to the right. As a byproduct b was also rebound to [1, 2].",
+        explanation: "This doesn't really have anything to do with f-strings, but the walrus operator binds quite narrow so we build a tuple of a as it was assigned, and we override b with the list to the right. As a byproduct b was also rebound to [1, 1].",
     },
     {
         code: `print(f"{f"{{}}"}")`,
