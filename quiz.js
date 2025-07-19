@@ -95,6 +95,12 @@ class Quiz {
           this.updateSelectedAnswer();
         }
       });
+      button.addEventListener("focus", () => {
+        if (!this.isAnswered) {
+          this.selectedAnswerIndex = index;
+          this.updateSelectedAnswer();
+        }
+      });
     });
 
     this.nextButton.addEventListener("click", () => this.nextQuestion());
@@ -289,6 +295,7 @@ class Quiz {
     this.answerButtons.forEach((button, index) => {
       if (index === this.selectedAnswerIndex && this.selectedAnswerIndex >= 0) {
         button.classList.add("selected");
+        button.focus(); // Sync focus with selection
       } else {
         button.classList.remove("selected");
       }
@@ -307,6 +314,7 @@ class Quiz {
     this.answerButtons.forEach((button, index) => {
       button.classList.remove("selected"); // Remove selection highlighting
       button.classList.add("disabled");
+      button.blur(); // Remove focus to prevent stuck orange outline
       if (allCorrect) {
         button.classList.add("correct");
       } else if (index === correctIndex) {
