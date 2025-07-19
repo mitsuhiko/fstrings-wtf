@@ -216,7 +216,7 @@ print(f"{i=!i}")`,
     question: "And i?",
     answers: ["i=10.0", FAILS_WITH_VALUE_ERROR, "i=10", "i=10j"],
     correct: 1,
-    explanation: "There is no such thing such as d.",
+    explanation: "There is no such thing such as i.",
   },
   {
     code: `print(f"{f"{{}}"}")`,
