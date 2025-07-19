@@ -4,7 +4,11 @@
   box-sizing: border-box;
 }
 
-body {
+html {
+  background: #0e3556;
+}
+
+body, html {
   font-family: "DM Mono", "Monaco", "Menlo", "Ubuntu Mono", monospace;
   background: linear-gradient(135deg, #113f67 0%, #0e3556 100%);
   color: #030303;
