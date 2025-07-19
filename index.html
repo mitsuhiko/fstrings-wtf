@@ -10,7 +10,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-content">
+            <h1 class="splash-title">f-strings</h1>
+            <p class="splash-subtitle">How good is your knowledge of Python's strings?</p>
+            <p class="splash-note">(Questions reflect behavior as of Python 3.13)</p>
+            <button id="start-quiz-btn" class="start-quiz-btn">Start Quiz</button>
+        </div>
+        <footer class="splash-footer">
+            made with 🍌 by <a href="https://github.com/mitsuhiko" target="_blank">Armin Ronacher</a>, motivated late at night by <a href="https://github.com/ambv">Lukasz Langa</a> and <a href="https://github.com/1st1">Yury Selivanov</a>
+        </footer>
+    </div>
+
+    <div class="container" id="main-content">
         <header>
             <h1>wt(f"")</h1>
         </header>

@@ -279,11 +279,20 @@ class Quiz {
         this.score = 0;
         this.isAnswered = false;
         this.totalQuestions = questions.length;
+        this.splashScreen = document.getElementById('splash-screen');
+        this.mainContent = document.getElementById('main-content');
+        this.startQuizBtn = document.getElementById('start-quiz-btn');
         
         this.initializeElements();
         this.setupEventListeners();
+        this.setupSplashScreen();
         this.initializeFromURL();
-        this.loadQuestion();
+        
+        // Only load question if splash is hidden (direct URL access)
+        if (this.shouldSkipSplash()) {
+            this.hideSplashScreen();
+            this.loadQuestion();
+        }
     }
     
     initializeFromURL() {
@@ -351,6 +360,38 @@ class Quiz {
                 this.nextQuestion();
             }
         });
+    }
+    
+    setupSplashScreen() {
+        this.startQuizBtn.addEventListener('click', () => this.startQuiz());
+        
+        // Also allow Enter or Space to start quiz from splash screen
+        document.addEventListener('keydown', (event) => {
+            if ((event.key === 'Enter' || event.key === ' ') && !this.splashScreen.classList.contains('hidden')) {
+                event.preventDefault();
+                this.startQuiz();
+            }
+        });
+    }
+    
+    shouldSkipSplash() {
+        // Skip splash if there's a question parameter in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.has('q');
+    }
+    
+    startQuiz() {
+        this.hideSplashScreen();
+        setTimeout(() => {
+            this.loadQuestion();
+        }, 400); // Wait for splash animation to start before loading question
+    }
+    
+    hideSplashScreen() {
+        this.splashScreen.classList.add('hidden');
+        setTimeout(() => {
+            this.mainContent.classList.add('show');
+        }, 300); // Slight delay for better transition effect
     }
     
     loadQuestion() {
@@ -466,7 +507,9 @@ class Quiz {
         this.finalScoreSection.style.display = 'none';
         document.querySelector('.quiz-container').style.display = 'block';
         
-        this.loadQuestion();
+        // Show splash screen again
+        this.mainContent.classList.remove('show');
+        this.splashScreen.classList.remove('hidden');
     }
 }
 
