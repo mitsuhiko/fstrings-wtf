@@ -255,6 +255,19 @@ header p {
     animation: slideInLeft 0.4s ease-out;
     animation-fill-mode: both;
     transform: translateX(0);
+    position: relative;
+    overflow: hidden;
+}
+
+.answer-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(17, 63, 103, 0.1), transparent);
+    transition: left 0.5s;
 }
 
 .answer-btn:nth-child(1) { animation-delay: 0.1s; }
@@ -280,6 +293,10 @@ header p {
     border-color: #113F67;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(17, 63, 103, 0.15);
+}
+
+.answer-btn:hover::before {
+    left: 100%;
 }
 
 .answer-btn.correct {
@@ -339,12 +356,29 @@ header p {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     margin: 0 10px;
     transform: translateY(0);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
 }
 
 .nav-btn:hover {
     background: #0e3556;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(17, 63, 103, 0.3);
+}
+
+.nav-btn:hover::before {
+    left: 100%;
 }
 
 .nav-btn:disabled {
