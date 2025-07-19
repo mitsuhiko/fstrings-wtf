@@ -11,6 +11,8 @@ experienced Python developers.
 
 Made by Armin Ronacher, motivated late at night by Lukasz Langa and Yury Selivanov at EuroPython 2025.
 
+Content is artisinal, code is vibe.
+
 ---
 
 *Remember: f-strings are powerful, but with great power comes great responsibility... and occasionally great confusion!*
