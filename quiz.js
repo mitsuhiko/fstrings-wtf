@@ -63,6 +63,9 @@ class Quiz {
     this.restartFinalButton = document.getElementById("restart-final-btn");
     this.shareTwitterButton = document.getElementById("share-twitter");
     this.shareBlueskyButton = document.getElementById("share-bluesky");
+    this.helpIcon = document.getElementById("help-icon");
+    this.helpPopover = document.getElementById("help-popover");
+    this.helpCloseButton = document.getElementById("help-close");
 
     this.totalQuestionsElement.textContent = this.totalQuestions;
     this.totalQuestionsScoreElement.textContent = this.totalQuestions;
@@ -94,9 +97,24 @@ class Quiz {
       this.shareOnBluesky()
     );
 
+    // Help popover event listeners
+    this.helpIcon.addEventListener("click", () => this.showHelpPopover());
+    this.helpCloseButton.addEventListener("click", () => this.hideHelpPopover());
+    this.helpPopover.addEventListener("click", (event) => {
+      if (event.target === this.helpPopover) {
+        this.hideHelpPopover();
+      }
+    });
+
     // Add keyboard event listener for number keys 1-4 and navigation
     document.addEventListener("keydown", (event) => {
       const key = event.key;
+
+      // Handle Escape key for help popover
+      if (key === "Escape" && this.helpPopover.style.display !== "none") {
+        this.hideHelpPopover();
+        return;
+      }
 
       // Skip if splash screen is visible
       if (!this.splashScreen.classList.contains("hidden")) {
@@ -367,6 +385,21 @@ class Quiz {
     // Show splash screen again
     this.mainContent.classList.remove("show");
     this.splashScreen.classList.remove("hidden");
+  }
+
+  showHelpPopover() {
+    this.helpPopover.style.display = "flex";
+    // Use requestAnimationFrame to ensure the display change happens before the class change
+    requestAnimationFrame(() => {
+      this.helpPopover.classList.add("show");
+    });
+  }
+
+  hideHelpPopover() {
+    this.helpPopover.classList.remove("show");
+    setTimeout(() => {
+      this.helpPopover.style.display = "none";
+    }, 300); // Wait for animation to complete
   }
 }
 

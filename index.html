@@ -52,6 +52,12 @@
     </footer>
   </div>
 
+  <button id="help-icon" class="help-icon" aria-label="Help">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
+    </svg>
+  </button>
+
   <div class="container" id="main-content">
     <header>
       <h1>fstrings.wtf</h1>
@@ -122,6 +128,28 @@
       </div>
 
       <button id="restart-final-btn" class="nav-btn">Take Quiz Again</button>
+    </div>
+  </div>
+
+  <!-- Help Popover -->
+  <div id="help-popover" class="help-popover" style="display: none;">
+    <div class="help-popover-content">
+      <div class="help-popover-header">
+        <h3>Help</h3>
+        <button id="help-close" class="help-close" aria-label="Close help">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="help-popover-body">
+        <ul>
+          <li>This quiz asks about the f-strings from Python 3.13</li>
+          <li>If you encounter an issue, please <a href="https://github.com/mitsuhiko/fstrings-wtf/issues/new" target="_blank" rel="noopener">open a ticket</a></li>
+          <li>If you don't like clicking, you can use 1/2/3/4 to quickly select an answer, or use arrow keys and select with space/enter</li>
+          <li>Created by <a href="https://github.com/mitsuhiko" target="_blank" rel="noopener">@mitsuhiko</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 
