@@ -423,7 +423,7 @@ class Quiz {
 
   shareOnTwitter() {
     const text = this.getShareText();
-    const url = "https://fstrings.wtf";
+    const url = "https://mitsuhiko.github.io/fstrings-wtf/";
     const twitterUrl = `https://x.com/intent/post?text=${encodeURIComponent(
       text
     )}&url=${encodeURIComponent(url)}`;
@@ -432,7 +432,7 @@ class Quiz {
 
   shareOnBluesky() {
     const text = this.getShareText();
-    const url = "https://fstrings.wtf";
+    const url = "https://mitsuhiko.github.io/fstrings-wtf/";
     const shareText = `${text} ${url}`;
     const blueskyUrl = `https://bsky.app/intent/compose?text=${encodeURIComponent(
       shareText

@@ -2,7 +2,7 @@
 
 An interactive quiz website that tests your knowledge of Python f-string edge cases and advanced features.
 
-**Take the quiz at: [fstrings.wtf](https://fstrings.wtf)**
+**Take the quiz at: [mitsuhiko.github.io/fstrings-wtf](https://mitsuhiko.github.io/fstrings-wtf/)**
 
 This quiz explores the surprising, confusing, and powerful aspects of Python
 f-strings through 20 carefully crafted questions. While f-strings seem simple on
