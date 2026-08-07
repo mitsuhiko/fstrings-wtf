@@ -226,4 +226,19 @@ print(f"{i=!i}")`,
     explanation:
       "Yes! They can be nested.  The {{ and }} just escapes it like before.",
   },
+  {
+    code: `from datetime import datetime
+dt = datetime(2024, 1, 1, 14, 30)
+print(f"{dt:%Y-%m-%d}")`,
+    question: "What will be printed?",
+    answers: [
+      "2024-01-01",
+      FAILS_WITH_SYNTAX_ERROR,
+      "dt:%Y-%m-%d",
+      "ValueError: Invalid format specifier",
+    ],
+    correct: 0,
+    explanation:
+      "F-strings support datetime format specifiers after ':' as a shorthand for strftime().",
+  },
 ];
